@@ -1,6 +1,8 @@
 package com.tiringbring.expensesonline;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.gson.JsonObject;
+import com.tiringbring.expensesonline.Activities.User.LoginActivity;
 
 import java.util.List;
 
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView txtViewResult;
+    private Button goToLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,35 +41,63 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         txtViewResult = findViewById(R.id.text_view);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-        Call<List<Post>> call = jsonPlaceHolderApi.getPost();
-        call.enqueue(new Callback<List<Post>>() {
+        goToLogin = findViewById(R.id.btnGoToLogin);
+        goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if(!response.isSuccessful()){
-                    txtViewResult.setText("Code: " + response.code());
-                    return;
-                }
-                List<Post> Posts = response.body();
-                for(Post post : Posts){
-                    String content = "";
-                    content+="Id: "+post.getId()+"\n";
-                    content+="User Id: "+post.getUserId()+"\n";
-                    content+="Title: "+post.getTitle()+"\n";
-                    content+="Text: "+post.getText()+"\n\n";
-                    txtViewResult.append(content);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                txtViewResult.setText(t.getMessage());
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://192.168.0.102:3001/api/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+//        Call<JsonObject> call = jsonPlaceHolderApi.getPost();
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+//                if(!response.isSuccessful()){
+//                    txtViewResult.setText("Code: " + response.code());
+//                    return;
+//                }
+//                txtViewResult.append(response.body().toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<JsonObject> call, Throwable t) {
+//                txtViewResult.setText(t.getMessage());
+//            }
+//        });
+//        call.enqueue(new Callback<List<Post>>() {
+//            @Override
+//            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+//                if(!response.isSuccessful()){
+//                    txtViewResult.setText("Code: " + response.code());
+//                    return;
+//                }
+//                List<Post> Posts = response.body();
+//                for(Post post : Posts){
+//                    String content = "";
+//                    content+="Id: "+post.getId()+"\n";
+//                    content+="User Id: "+post.getUserId()+"\n";
+//                    content+="Title: "+post.getTitle()+"\n";
+//                    content+="Text: "+post.getText()+"\n\n";
+//                    txtViewResult.append(content);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Post>> call, Throwable t) {
+//                txtViewResult.setText(t.getMessage());
+//            }
+//        });
 
 
 
