@@ -11,7 +11,7 @@ public class AccessAPI {
 
     public AccessAPI() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.103:3001/api/")
+                .baseUrl("http://192.168.0.102:3001/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         expenseOnlineAPI = retrofit.create(ExpenseOnlineAPI.class);

@@ -1,10 +1,8 @@
 package com.tiringbring.expensesonline.Activities.User;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.tiringbring.expensesonline.Activities.RootActivity;
@@ -17,12 +15,12 @@ import com.tiringbring.expensesonline.R;
 import com.tiringbring.expensesonline.SharedData.Memory;
 import com.tiringbring.expensesonline.SharedData.Preference;
 
-public class LoginActivity extends RootActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
+public class UserActivity extends RootActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_user);
 
         AddFragment(new LoginFragment());
     }
@@ -79,7 +77,7 @@ public class LoginActivity extends RootActivity implements LoginFragment.OnFragm
         }else{
             Fragment fragment = null;
             try {
-                fragment = ActivationFragment.newInstance(user.code);
+                fragment = ActivationFragment.newInstance(user.code, user._id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,7 +95,7 @@ public class LoginActivity extends RootActivity implements LoginFragment.OnFragm
         Preference.saveString(this, Memory.USER_ID, user._id);
         Fragment fragment = null;
         try {
-            fragment = ActivationFragment.newInstance(user.code);
+            fragment = ActivationFragment.newInstance(user.code, user._id);
         } catch (Exception e) {
             e.printStackTrace();
         }

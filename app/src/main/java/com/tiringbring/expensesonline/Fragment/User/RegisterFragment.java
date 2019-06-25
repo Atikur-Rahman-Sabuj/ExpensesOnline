@@ -1,7 +1,6 @@
 package com.tiringbring.expensesonline.Fragment.User;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tiringbring.expensesonline.Activities.User.LoginActivity;
+import com.tiringbring.expensesonline.Activities.User.UserActivity;
+import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.R;
 import com.tiringbring.expensesonline.Services.UserDataService;
@@ -26,7 +26,7 @@ import com.tiringbring.expensesonline.Services.UserDataService;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends RootFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -100,7 +100,7 @@ public class RegisterFragment extends Fragment {
     View.OnClickListener onClickGoToLogin = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((LoginActivity) getActivity()).GotToLogin();
+            ((UserActivity) getActivity()).GotToLogin();
         }
     };
 

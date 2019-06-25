@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tiringbring.expensesonline.Activities.User.LoginActivity;
+import com.tiringbring.expensesonline.Activities.User.UserActivity;
 import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.R;
@@ -71,7 +71,7 @@ public class LoginFragment extends RootFragment {
     View.OnClickListener onClickGoToRegister = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((LoginActivity) getActivity()).GotToRegister();
+            ((UserActivity) getActivity()).GotToRegister();
         }
     };
     @Override

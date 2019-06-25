@@ -1,6 +1,7 @@
 package com.tiringbring.expensesonline.Services;
 
 import com.google.gson.JsonObject;
+import com.tiringbring.expensesonline.Models.Expense;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.Post;
 
@@ -20,9 +21,14 @@ public interface ExpenseOnlineAPI {
     Call<User> loginUser(@Query("email") String email, @Query("password") String password);
     @POST("user/register")
     Call<User> registerUser(@Body User user);
+    @POST("user/verifyemail")
+    Call<User> activateUser(@Query("_id") String _id, @Query("code") String code);
 
     //expense
-
+    @POST("expense")
+    Call<Expense> saveExpense(@Body Expense expense);
+    @POST("expense/update")
+    Call<Expense> updateExpense(@Body Expense expense);
 
     //income
 }

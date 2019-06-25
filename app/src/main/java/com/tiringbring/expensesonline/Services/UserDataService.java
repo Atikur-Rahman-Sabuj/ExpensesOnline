@@ -51,6 +51,29 @@ public class UserDataService {
             return null;
         }
     }
+
+    public User activateUser(String _id, String code){
+        Call<User> call = new AccessAPI().expenseOnlineAPI.activateUser(_id, code);
+        try {
+            Response<User> response = call.execute();
+            if(response.code()==201){
+                //did not match code
+                return null;
+            }
+            else if(response.code() == 200) {
+                //logged in successful
+                User loggedinUser = response.body();
+                return loggedinUser;
+            }else{
+                //unknown
+                return null;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public interface UserDataServiceInteractionListener {
         // TODO: Update argument type and name
         void Registration();

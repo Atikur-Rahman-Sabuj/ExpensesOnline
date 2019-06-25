@@ -17,17 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.tiringbring.expensesonline.Activities.User.LoginActivity;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.tiringbring.expensesonline.Activities.Expense.ExpenseActivity;
+import com.tiringbring.expensesonline.Activities.User.UserActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
                 startActivity(intent);
             }
         });
@@ -159,6 +152,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            //Toast.makeText(getApplicationContext(), "new activity", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ExpenseActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 

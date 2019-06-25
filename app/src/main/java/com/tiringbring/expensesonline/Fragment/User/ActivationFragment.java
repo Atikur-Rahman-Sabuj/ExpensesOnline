@@ -11,24 +11,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.tiringbring.expensesonline.Activities.User.LoginActivity;
+import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.MainActivity;
+import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.R;
+import com.tiringbring.expensesonline.Services.UserDataService;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ActivationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ActivationFragment extends Fragment {
+public class ActivationFragment extends RootFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CODE = "code";
+    private static final String ID = "id";
     private Button btnActivate, btnFakeActivate;
     private EditText etCode;
 
 
     private String mCode;
+    private String mId;
 
 
     public ActivationFragment() {
@@ -36,10 +40,11 @@ public class ActivationFragment extends Fragment {
     }
 
 
-    public static ActivationFragment newInstance(String code) {
+    public static ActivationFragment newInstance(String code, String id) {
         ActivationFragment fragment = new ActivationFragment();
         Bundle args = new Bundle();
         args.putString(CODE, code);
+        args.putString(ID, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +54,7 @@ public class ActivationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCode = getArguments().getString(CODE);
+            mId = getArguments().getString(ID);
         }
     }
 
@@ -68,7 +74,13 @@ public class ActivationFragment extends Fragment {
         @Override
         public void onClick(View v) {
             if(etCode.getText().toString().equals(mCode)){
-                startActivity(new Intent(getContext(), MainActivity.class));
+                User user = new UserDataService().activateUser(mCode, mId);
+                if(user!=null){
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                }else{
+                    Toast.makeText(getContext(),"Error, Try again!", Toast.LENGTH_LONG).show();
+                }
+
             }else{
                 Toast.makeText(getContext(),"Wrong Code", Toast.LENGTH_LONG).show();
             }
