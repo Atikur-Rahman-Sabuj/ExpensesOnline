@@ -19,9 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tiringbring.expensesonline.Fragment.RootFragment;
+import com.tiringbring.expensesonline.Models.Expense;
 import com.tiringbring.expensesonline.R;
+import com.tiringbring.expensesonline.Services.ExpenseDataService;
+import com.tiringbring.expensesonline.SharedData.Memory;
+import com.tiringbring.expensesonline.SharedData.Preference;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +49,7 @@ public class AddExpense extends RootFragment {
 
     private OnFragmentInteractionListener mListener;
 
-
+    private String userId;
     private TextView tvDatePicker;
     private EditText etName;
     private EditText etAmount;
@@ -83,6 +89,7 @@ public class AddExpense extends RootFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userId = Preference.loadString(getContext(), Memory.USER_ID, "00");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -94,7 +101,22 @@ public class AddExpense extends RootFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_expense, container, false);
-
+        etName = (EditText) view.findViewById(R.id.etName);
+        etAmount = (EditText) view.findViewById(R.id.etAmount);
+        btnSave = (Button) view.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = new GregorianCalendar(Year,Month,Day);
+                Expense expense = new Expense(etName.getText().toString(), calendar.getTime(), Double.parseDouble(etAmount.getText().toString()),userId);
+                Expense savedExpense = new ExpenseDataService().SaveExpense(expense);
+                if(savedExpense == null){
+                    btnSave.setText("Could Not Save");
+                }else{
+                    btnSave.setText("Saved");
+                }
+            }
+        });
 
         tvDatePicker = (TextView) view.findViewById(R.id.tvDatePicker);
         Calendar calendar = Calendar.getInstance();
@@ -102,6 +124,7 @@ public class AddExpense extends RootFragment {
         Month = calendar.get(Calendar.MONTH)+1;
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         tvDatePicker.setText(Day+"/"+Month+"/"+Year);
+        //region DatePickerDialog
         tvDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +139,7 @@ public class AddExpense extends RootFragment {
                 dialog.show();
             }
         });
+
         tvDateSetListner = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -128,10 +152,10 @@ public class AddExpense extends RootFragment {
                 //ChangeTotal();
             }
         };
+        //endregion
+
         return  view;
     }
-
-
 
     @Override
     public void onAttach(Context context) {

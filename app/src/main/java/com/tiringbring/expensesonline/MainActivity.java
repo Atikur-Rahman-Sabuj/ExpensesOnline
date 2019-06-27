@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.tiringbring.expensesonline.Activities.Expense.ExpenseActivity;
 import com.tiringbring.expensesonline.Activities.User.UserActivity;
+import com.tiringbring.expensesonline.Test.DynamicViewCreationActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -155,7 +156,9 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(getApplicationContext(), "new activity", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ExpenseActivity.class));
 
+
         } else if (id == R.id.nav_slideshow) {
+            startActivity(new Intent(this, DynamicViewCreationActivity.class));
 
         } else if (id == R.id.nav_tools) {
 
