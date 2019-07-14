@@ -15,7 +15,7 @@ import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.MainActivity;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.R;
-import com.tiringbring.expensesonline.Services.UserDataService;
+import com.tiringbring.expensesonline.DataAccess.UserDataService;
 
 /**
  * A simple {@link Fragment} subclass.

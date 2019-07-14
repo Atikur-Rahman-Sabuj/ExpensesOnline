@@ -1,8 +1,7 @@
-package com.tiringbring.expensesonline.Services;
+package com.tiringbring.expensesonline.DataAccess;
 
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.tiringbring.expensesonline.Post;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Test {

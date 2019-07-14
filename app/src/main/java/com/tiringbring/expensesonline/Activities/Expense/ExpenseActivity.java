@@ -18,10 +18,15 @@ import android.view.Menu;
 
 import com.tiringbring.expensesonline.Activities.RootActivity;
 import com.tiringbring.expensesonline.Fragment.Expense.AddExpense;
+import com.tiringbring.expensesonline.Fragment.Expense.ExpandableListFragment;
+import com.tiringbring.expensesonline.Fragment.Expense.ShowExpenses;
 import com.tiringbring.expensesonline.R;
 
 public class ExpenseActivity extends RootActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AddExpense.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        AddExpense.OnFragmentInteractionListener,
+        ShowExpenses.OnFragmentInteractionListener,
+        ExpandableListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +34,6 @@ public class ExpenseActivity extends RootActivity
         setContentView(R.layout.activity_expense);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,7 +43,8 @@ public class ExpenseActivity extends RootActivity
         navigationView.setNavigationItemSelectedListener(this);
         if(findViewById(R.id.frgExpenseFrame)!=null)
         {
-            Fragment fragment = new AddExpense();
+            //Fragment fragment = new AddExpense();
+            Fragment fragment = new ShowExpenses();
             // Bundle bundle = new Bundle();
             // bundle.putInt("Day", Day);
             // bundle.putInt("Month", Month);

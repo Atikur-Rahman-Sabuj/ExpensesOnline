@@ -14,7 +14,7 @@ import com.tiringbring.expensesonline.Activities.User.UserActivity;
 import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.R;
-import com.tiringbring.expensesonline.Services.UserDataService;
+import com.tiringbring.expensesonline.DataAccess.UserDataService;
 
 public class LoginFragment extends RootFragment {
     private static final String CODE = "code";

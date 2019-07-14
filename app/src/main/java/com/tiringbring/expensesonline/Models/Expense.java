@@ -2,7 +2,7 @@ package com.tiringbring.expensesonline.Models;
 
 import java.util.Date;
 
-public class Expense extends RootModel{
+public class Expense extends RootModel implements Comparable<Expense>{
     public String name;
     public Date date;
     public double amount;
@@ -29,5 +29,10 @@ public class Expense extends RootModel{
 
     public String getUser_id() {
         return user_id;
+    }
+
+    @Override
+    public int compareTo(Expense o) {
+        return  getDate().compareTo(o.getDate());
     }
 }

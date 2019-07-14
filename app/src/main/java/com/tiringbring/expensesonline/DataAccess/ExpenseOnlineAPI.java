@@ -1,6 +1,5 @@
-package com.tiringbring.expensesonline.Services;
+package com.tiringbring.expensesonline.DataAccess;
 
-import com.google.gson.JsonObject;
 import com.tiringbring.expensesonline.Models.Expense;
 import com.tiringbring.expensesonline.Models.User;
 import com.tiringbring.expensesonline.Post;
@@ -29,6 +28,7 @@ public interface ExpenseOnlineAPI {
     Call<Expense> saveExpense(@Body Expense expense);
     @POST("expense/update")
     Call<Expense> updateExpense(@Body Expense expense);
-
+    @GET("expense")
+    Call<List<Expense>> getExpensesofUser(@Query("user_id") String user_id);
     //income
 }

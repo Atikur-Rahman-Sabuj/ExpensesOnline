@@ -21,12 +21,11 @@ import android.widget.TextView;
 import com.tiringbring.expensesonline.Fragment.RootFragment;
 import com.tiringbring.expensesonline.Models.Expense;
 import com.tiringbring.expensesonline.R;
-import com.tiringbring.expensesonline.Services.ExpenseDataService;
+import com.tiringbring.expensesonline.DataAccess.ExpenseDataService;
 import com.tiringbring.expensesonline.SharedData.Memory;
 import com.tiringbring.expensesonline.SharedData.Preference;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -103,12 +102,49 @@ public class AddExpense extends RootFragment {
         View view = inflater.inflate(R.layout.fragment_add_expense, container, false);
         etName = (EditText) view.findViewById(R.id.etName);
         etAmount = (EditText) view.findViewById(R.id.etAmount);
+        btnLeft = (Button) view.findViewById(R.id.btnDPleft);
+        btnRight = (Button) view.findViewById(R.id.btnDPRight);
+        //region left right controls
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar1 = new GregorianCalendar(Year, Month-1, Day);
+//                calendar1.set(Calendar.DAY_OF_MONTH, Day);
+//                calendar1.set(Calendar.MONTH, Month-1);
+//                calendar1.set(Calendar.YEAR, Year);
+                calendar1.add(Calendar.DAY_OF_MONTH, 1);
+                Year = calendar1.get(Calendar.YEAR);
+                Month = calendar1.get(Calendar.MONTH)+1;
+                Day = calendar1.get(Calendar.DAY_OF_MONTH);
+                tvDatePicker.setText(Day+"/"+Month+"/"+Year);
+            }
+        });
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar1 = new GregorianCalendar(Year, Month-1, Day);
+//                calendar1.set(Calendar.DAY_OF_MONTH, Day);
+//                calendar1.set(Calendar.MONTH, Month-1);
+//                calendar1.set(Calendar.YEAR, Year);
+                calendar1.add(Calendar.DAY_OF_MONTH, -1);
+                Year = calendar1.get(Calendar.YEAR);
+                Month = calendar1.get(Calendar.MONTH)+1;
+                Day = calendar1.get(Calendar.DAY_OF_MONTH);
+                tvDatePicker.setText(Day+"/"+Month+"/"+Year);
+            }
+        });
+        //endregion
         btnSave = (Button) view.findViewById(R.id.btnSave);
+        //region save update
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = new GregorianCalendar(Year,Month,Day);
-                Expense expense = new Expense(etName.getText().toString(), calendar.getTime(), Double.parseDouble(etAmount.getText().toString()),userId);
+                Calendar calendar = new GregorianCalendar(Year,Month - 1,Day);
+                String name = "Untitled";
+                if(!etName.getText().toString().equals("")){
+                   name = etName.getText().toString();
+                }
+                Expense expense = new Expense(name, calendar.getTime(), Double.parseDouble(etAmount.getText().toString()),userId);
                 Expense savedExpense = new ExpenseDataService().SaveExpense(expense);
                 if(savedExpense == null){
                     btnSave.setText("Could Not Save");
@@ -117,7 +153,7 @@ public class AddExpense extends RootFragment {
                 }
             }
         });
-
+        //endregion
         tvDatePicker = (TextView) view.findViewById(R.id.tvDatePicker);
         Calendar calendar = Calendar.getInstance();
         Year = calendar.get(Calendar.YEAR);
